@@ -34,3 +34,13 @@ Make sure to deploy the output of `npm run build`
 
 - `build/server`
 - `build/client`
+
+
+## Stack
+
+ORM: Drizzle
+DB: MySQL
+AUTH: Remix-Auth
+Validation: Conform/ZOD
+
+https://www.bitovi.com/blog/sending-transactional-emails-with-remix-and-amazon-aws-ses
