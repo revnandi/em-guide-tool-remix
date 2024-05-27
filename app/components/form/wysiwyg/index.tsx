@@ -1,110 +1,95 @@
 import Mention from "@tiptap/extension-mention";
 import { Color } from "@tiptap/extension-color";
 import ListItem from "@tiptap/extension-list-item";
+import Underline from '@tiptap/extension-underline'
 import TextStyle from "@tiptap/extension-text-style";
-import {
-  EditorContent,
-  useEditor,
-  FloatingMenu,
-  useCurrentEditor,
-  BubbleMenu,
-} from "@tiptap/react";
+import { type Editor, EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import { Icon } from "~/components/icon";
+import { cn } from "~/utils/misc";
 
 import suggestion from "./suggestion";
 
-const MenuBar = () => {
-  const { editor } = useCurrentEditor();
-
+const MenuBar = ({ editor }: { editor: Editor }) => {
   if (!editor) {
     return null;
   }
 
   return (
-    <>
+    <div className="flex gap-x-1">
       <button
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editor.can().chain().focus().toggleBold().run()}
-        className={editor.isActive("bold") ? "is-active" : ""}
+        className={cn(
+          editor.isActive("bold") ? "is-active" : "",
+          "flex p-0.5 hover:bg-slate-100 rounded-md group"
+        )}
       >
-        bold
+        <Icon
+          name="font-bold"
+          size="md"
+          className="text-zinc-500 group-hover:text-zinc-700"
+        />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleItalic().run()}
         disabled={!editor.can().chain().focus().toggleItalic().run()}
-        className={editor.isActive("italic") ? "is-active" : ""}
+        className={cn(
+          editor.isActive("italic") ? "is-active" : "",
+          "flex p-0.5 hover:bg-slate-100 rounded-md group"
+        )}
       >
-        italic
+        <Icon
+          name="font-italic"
+          size="md"
+          className="text-zinc-500 group-hover:text-zinc-700"
+        />
+      </button>
+      <button
+        onClick={() => editor.chain().focus().toggleUnderline().run()}
+        disabled={!editor.can().chain().focus().toggleUnderline().run()}
+        className={cn(
+          editor.isActive("underline") ? "is-active" : "",
+          "flex p-0.5 hover:bg-slate-100 rounded-md group"
+        )}
+      >
+        <Icon
+          name="underline"
+          size="md"
+          className="text-zinc-500 group-hover:text-zinc-700"
+        />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleStrike().run()}
         disabled={!editor.can().chain().focus().toggleStrike().run()}
-        className={editor.isActive("strike") ? "is-active" : ""}
+        className={cn(
+          editor.isActive("strike") ? "is-active" : "",
+          "flex p-0.5 hover:bg-slate-100 rounded-md group"
+        )}
       >
-        strike
+        <Icon
+          name="strikethrough"
+          size="md"
+          className="text-zinc-500 group-hover:text-zinc-700"
+        />
       </button>
-      <button
-        onClick={() => editor.chain().focus().toggleCode().run()}
-        disabled={!editor.can().chain().focus().toggleCode().run()}
-        className={editor.isActive("code") ? "is-active" : ""}
-      >
-        code
-      </button>
-      <button onClick={() => editor.chain().focus().unsetAllMarks().run()}>
-        clear marks
-      </button>
-      <button onClick={() => editor.chain().focus().clearNodes().run()}>
-        clear nodes
-      </button>
-      <button
-        onClick={() => editor.chain().focus().setParagraph().run()}
-        className={editor.isActive("paragraph") ? "is-active" : ""}
-      >
-        paragraph
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-        className={editor.isActive("heading", { level: 1 }) ? "is-active" : ""}
-      >
-        h1
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-        className={editor.isActive("heading", { level: 2 }) ? "is-active" : ""}
-      >
-        h2
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-        className={editor.isActive("heading", { level: 3 }) ? "is-active" : ""}
-      >
-        h3
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
-        className={editor.isActive("heading", { level: 4 }) ? "is-active" : ""}
-      >
-        h4
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
-        className={editor.isActive("heading", { level: 5 }) ? "is-active" : ""}
-      >
-        h5
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
-        className={editor.isActive("heading", { level: 6 }) ? "is-active" : ""}
-      >
-        h6
-      </button>
+
       <button
         onClick={() => editor.chain().focus().toggleBulletList().run()}
-        className={editor.isActive("bulletList") ? "is-active" : ""}
+        disabled={!editor.can().chain().focus().toggleBulletList().run()}
+        className={cn(
+          editor.isActive("bullet-list") ? "is-active" : "",
+          "flex p-0.5 hover:bg-slate-100 rounded-md group"
+        )}
       >
-        bullet list
+        <Icon
+          name="list-bullet"
+          size="md"
+          className="text-zinc-500 group-hover:text-zinc-700"
+        />
       </button>
-      <button
+
+      {/* <button
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
         className={editor.isActive("orderedList") ? "is-active" : ""}
       >
@@ -147,23 +132,23 @@ const MenuBar = () => {
         }
       >
         purple
-      </button>
-    </>
+      </button> */}
+    </div>
   );
 };
 
 export default () => {
   const editor = useEditor({
     extensions: [
-      StarterKit,
       Mention.configure({
         HTMLAttributes: {
-          class: "mention font-bold",
+          class: "mention font-bold text-indigo-600 cursor-pointer bg-violet-100 rounded-md p-0.5",
         },
         suggestion,
       }),
       Color.configure({ types: [TextStyle.name, ListItem.name] }),
       TextStyle.configure({ types: [ListItem.name] }),
+      Underline,
       StarterKit.configure({
         bulletList: {
           keepMarks: true,
@@ -179,7 +164,7 @@ export default () => {
     editorProps: {
       attributes: {
         class:
-          "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl mx-auto focus:outline-none border rounded-md min-h-32 px-2 py-2",
+          "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl mx-auto focus:outline-none min-h-32 px-2 py-2",
       },
     },
   });
@@ -189,9 +174,9 @@ export default () => {
   }
 
   return (
-    <>
-      <MenuBar/>
+    <div className="border rounded-md px-2 pb-2">
       <EditorContent editor={editor} />
-    </>
+      <MenuBar editor={editor} />
+    </div>
   );
 };
