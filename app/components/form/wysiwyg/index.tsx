@@ -1,7 +1,7 @@
 import Mention from "@tiptap/extension-mention";
 import { Color } from "@tiptap/extension-color";
 import ListItem from "@tiptap/extension-list-item";
-import Underline from '@tiptap/extension-underline'
+import Underline from "@tiptap/extension-underline";
 import TextStyle from "@tiptap/extension-text-style";
 import { type Editor, EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -16,7 +16,7 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
   }
 
   return (
-    <div className="flex gap-x-1">
+    <div className="flex justify-between gap-x-1">
       <button
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editor.can().chain().focus().toggleBold().run()}
@@ -142,7 +142,8 @@ export default () => {
     extensions: [
       Mention.configure({
         HTMLAttributes: {
-          class: "mention font-bold text-indigo-600 cursor-pointer bg-violet-100 rounded-md p-0.5",
+          class:
+            "mention font-bold text-indigo-600 cursor-pointer bg-violet-100 rounded-md p-0.5",
         },
         suggestion,
       }),
@@ -174,9 +175,15 @@ export default () => {
   }
 
   return (
-    <div className="border rounded-md px-2 pb-2">
+    <div className="rounded-md border px-2 pb-2">
       <EditorContent editor={editor} />
-      <MenuBar editor={editor} />
+      <div className="flex justify-between gap-x-1">
+        <MenuBar editor={editor} />
+        <button className="flex min-w-12 items-center justify-center gap-x-2 rounded-md bg-violet-100 px-4 py-1 transition-colors ease-in-out hover:bg-violet-50">
+          <span className="text-sm font-medium text-indigo-600">Comment</span>
+          {/* <Icon name="paper-plane" size="sm" className="text-indigo-600" /> */}
+        </button>
+      </div>
     </div>
   );
 };

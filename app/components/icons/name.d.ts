@@ -7,6 +7,7 @@ export type IconName =
   | "heading"
   | "list-bullet"
   | "magnifying-glass"
+  | "paper-plane"
   | "quote"
   | "strikethrough"
   | "underline";
