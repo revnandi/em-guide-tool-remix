@@ -88,51 +88,6 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
           className="text-zinc-500 group-hover:text-zinc-700"
         />
       </button>
-
-      {/* <button
-        onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        className={editor.isActive("orderedList") ? "is-active" : ""}
-      >
-        ordered list
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-        className={editor.isActive("codeBlock") ? "is-active" : ""}
-      >
-        code block
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleBlockquote().run()}
-        className={editor.isActive("blockquote") ? "is-active" : ""}
-      >
-        blockquote
-      </button>
-      <button onClick={() => editor.chain().focus().setHorizontalRule().run()}>
-        horizontal rule
-      </button>
-      <button onClick={() => editor.chain().focus().setHardBreak().run()}>
-        hard break
-      </button>
-      <button
-        onClick={() => editor.chain().focus().undo().run()}
-        disabled={!editor.can().chain().focus().undo().run()}
-      >
-        undo
-      </button>
-      <button
-        onClick={() => editor.chain().focus().redo().run()}
-        disabled={!editor.can().chain().focus().redo().run()}
-      >
-        redo
-      </button>
-      <button
-        onClick={() => editor.chain().focus().setColor("#958DF1").run()}
-        className={
-          editor.isActive("textStyle", { color: "#958DF1" }) ? "is-active" : ""
-        }
-      >
-        purple
-      </button> */}
     </div>
   );
 };

@@ -10,8 +10,16 @@ import { Form, Link, useActionData, useSearchParams } from "@remix-run/react";
 import { z } from "zod";
 // import { GeneralErrorBoundary } from "~components/error-boundary.tsx";
 import { CheckboxField, ErrorList, Field } from "~/components/form";
-import EditorContent from '~/components/form/wysiwyg'
 import { useIsPending } from "~/utils/misc";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "~/components/card";
+import { Button } from "~/components/button";
 
 // TODO make schemas more nuanced
 const LoginFormSchema = z.object({
@@ -38,25 +46,55 @@ export default function LoginPage() {
   });
 
   return (
-    <div className="container mx-auto">
-      <div className="max-w-prose mx-auto p-4">
-        <div className="mb-4">
-          <h1 className="font-bold text-3xl">Log in</h1>
-        </div>
-        <Form method="POST" {...getFormProps(form)}>
-          <Field
-            labelProps={{ children: "Username" }}
-            inputProps={{
-              ...getInputProps(fields.username, { type: "text" }),
-              autoFocus: true,
-              className: "lowercase",
-              autoComplete: "username",
-            }}
-            errors={fields.username.errors}
-          />
-        </Form>
-        <EditorContent></EditorContent>
+    <main className="">
+      <div className="container mx-auto">
+        <Card className="mx-auto max-w-sm">
+          <CardHeader className="space-y-1">
+            <CardTitle className="text-2xl font-bold">Login</CardTitle>
+            <CardDescription>
+              Enter your email and password to login to your account
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Form method="POST" {...getFormProps(form)}>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Field
+                    labelProps={{
+                      children: "Username",
+                    }}
+                    inputProps={{
+                      ...getInputProps(fields.username, { type: "text" }),
+                      autoFocus: true,
+                      className: "lowercase",
+                      autoComplete: "username",
+                    }}
+                    errors={fields.username.errors}
+                  />
+                  <Field
+                    labelProps={{
+                      children: "Password",
+                    }}
+                    inputProps={{
+                      ...getInputProps(fields.password, { type: "password" }),
+                      autoComplete: "current-password",
+                    }}
+                    errors={fields.password.errors}
+                  />
+                  <CheckboxField
+                    labelProps={{ children: "Remember me" }}
+                    buttonProps={{
+                      ...getInputProps(fields.remember, { type: "checkbox" }),
+                    }}
+                  />
+                </div>
+                <Button className="w-full" type="submit" variant="ghost">Log in</Button>
+              </div>
+            </Form>
+          </CardContent>
+          <CardFooter></CardFooter>
+        </Card>
       </div>
-    </div>
+    </main>
   );
 }
