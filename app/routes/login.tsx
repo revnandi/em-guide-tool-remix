@@ -20,6 +20,7 @@ import {
   CardTitle,
 } from "~/components/card";
 import { Button } from "~/components/button";
+import { StatusButton } from "~/components/status-button";
 
 // TODO make schemas more nuanced
 const LoginFormSchema = z.object({
@@ -88,7 +89,15 @@ export default function LoginPage() {
                     }}
                   />
                 </div>
-                <Button className="w-full" type="submit" variant="ghost">Log in</Button>
+                <StatusButton
+                  className="w-full"
+                  type="submit"
+                  status={isPending ? "pending" : form.status ?? "idle"}
+                  variant="ghost"
+                  disabled={isPending}
+                >
+                  Log in
+                </StatusButton>
               </div>
             </Form>
           </CardContent>
