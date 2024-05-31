@@ -17,7 +17,7 @@ export const users = mysqlTable("users", {
   lastname: text("lastname"),
   email: text("email"),
   roleId: int('role_id'),
-  settingsId: int('settings_id'),
+  settingsId: int('settings_id'), 
 });
 
 export const settings = mysqlTable("settings", {
@@ -32,13 +32,17 @@ export const notifications = mysqlTable("notifications", {
   notificationId: int("notification_id"),
   isDarkMode: boolean("is_dark_mode"),
   language: text("language"),
+  userId: int('user_id'),
 });
 
-export const notificationsRelations = relations(notifications, ({ many }) => ({
-  users: many(users),
+export const notificationsRelations = relations(notifications, ({ one }) => ({
+  user: one(users, {
+    fields: [notifications.userId],
+    references: [users.id],
+  }),
 }));
 
-export const usersRelations = relations(users, ({ one }) => ({
+export const usersRelations = relations(users, ({ one, many }) => ({
   role: one(roles, {
     fields: [users.roleId],
     references: [roles.id],
@@ -47,9 +51,6 @@ export const usersRelations = relations(users, ({ one }) => ({
     fields: [users.settingsId],
     references: [settings.userId],
   }),
-  notifications: one(notifications, {
-    fields: [users.notificationsId],
-    references: [notifications.id],
-  }),
+  notifications: many(notifications)
 }));
 

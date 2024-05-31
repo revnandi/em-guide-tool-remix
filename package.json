@@ -52,6 +52,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@epic-web/config": "^1.7.5",
     "@remix-run/dev": "^2.9.2",
     "@remix-run/eslint-config": "^2.9.2",
     "@sly-cli/sly": "^1.10.0",
@@ -86,6 +87,7 @@
     "vite": "^5.2.11",
     "vite-tsconfig-paths": "^4.3.2"
   },
+  "prettier": "@epic-web/config/prettier",
   "engines": {
     "node": ">=20.0.0"
   }

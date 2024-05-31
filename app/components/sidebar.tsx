@@ -14,21 +14,6 @@ export const SideBar = () => {
           href="#"
           className="flex items-center px-3 py-2 mb-10 rounded-lg text-slate-900 dark:text-white"
         >
-          <svg
-            className="w-5 h-5"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
-          </svg>
           <span className="ml-3 text-base font-semibold">EM GUIDE</span>
         </a>
         <ul className="space-y-2 text-sm font-medium">
@@ -86,7 +71,7 @@ export const SideBar = () => {
             </Link>
           </li>
         </ul>
-        <div className="flex mt-auto">
+        {/* <div className="flex mt-auto">
           <div className="flex justify-between w-full">
             <span className="text-sm font-medium text-black dark:text-white">
               email@example.com
@@ -109,7 +94,7 @@ export const SideBar = () => {
               <circle cx="5" cy="12" r="1" />
             </svg>
           </div>
-        </div>
+        </div> */}
       </div>
     </aside>
   );
