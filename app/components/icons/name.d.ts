@@ -4,6 +4,10 @@ export type IconName =
   | "bar-chart"
   | "bell"
   | "chat-bubble"
+  | "chevron-down"
+  | "chevron-left"
+  | "chevron-right"
+  | "chevron-up"
   | "clipboard"
   | "counter-clockwise-clock"
   | "cross-2"
@@ -23,4 +27,5 @@ export type IconName =
   | "quote"
   | "reader"
   | "strikethrough"
-  | "underline";
+  | "underline"
+  | "width";

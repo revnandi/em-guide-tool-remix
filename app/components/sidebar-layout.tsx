@@ -8,7 +8,7 @@ export const SideBarLayout = ({
   content: ReactNode;
 }) => {
   return (
-    <div className="w-screen h-screen bg-white dark:bg-zinc-900">
+    <div className="flex w-screen h-screen bg-white dark:bg-zinc-900">
       {sidebar}
       {content}
     </div>
