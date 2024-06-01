@@ -5,29 +5,8 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1717192304828,
-      "tag": "0000_careful_leper_queen",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1717238875038,
-      "tag": "0001_huge_mantis",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1717239660271,
-      "tag": "0002_deep_jocasta",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "5",
-      "when": 1717240316356,
-      "tag": "0003_strange_skullbuster",
+      "when": 1717253106636,
+      "tag": "0000_eager_alex_power",
       "breakpoints": true
     }
   ]

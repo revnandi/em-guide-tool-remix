@@ -3,7 +3,7 @@ import { int, text, varchar, mysqlTable, boolean, datetime } from "drizzle-orm/m
 
 export const roles = mysqlTable("roles", {
   id: int("id").primaryKey().autoincrement(),
-  slug: varchar('slug', { length: 255 }).unique(),
+  slug: varchar('slug', { length: 256 }).unique(),
   name: text("name"),
 });
 
@@ -13,7 +13,7 @@ export const rolesRelations = relations(roles, ({ many }) => ({
 
 export const users = mysqlTable("users", {
   id: int("id").primaryKey().autoincrement(),
-  slug: varchar('slug', { length: 255 }).unique(),
+  slug: varchar('slug', { length: 256 }).unique(),
   username: text("username"),
   firstname: text("firstname"),
   lastname: text("lastname"),
@@ -59,7 +59,7 @@ export const notificationsRelations = relations(notifications, ({ one }) => ({
 export const articles = mysqlTable("articles", {
   id: int("id").primaryKey().autoincrement(),
   title: text("title"),
-  slug: varchar('slug', { length: 255 }).unique(),
+  slug: varchar('slug', { length: 256 }).unique(),
   except: text("except"),
   originalUrl: text("original_url"),
   magazineId: int("magazine_id"),
@@ -85,7 +85,7 @@ export const articlesRelations = relations(articles, ({ one }) => ({
 export const magazines = mysqlTable("magazines", {
   id: int("id").primaryKey().autoincrement(),
   name: text("name"),
-  slug: varchar('slug', { length: 255 }).unique(),
+  slug: varchar('slug', { length: 256 }).unique(),
   logoId: int("logo_id"),
   createdBy: int("user_id"),
   createdAt: datetime("created_at"),
@@ -116,7 +116,7 @@ export const media = mysqlTable("media", {
 
 export const mediaRelations = relations(media, ({ many }) => ({
   magazines: many(magazines),
-}));
+}));  
 
 // export const articleShares = mysqlTable("article_shares", {
 //   id: int("id").primaryKey().autoincrement(),
