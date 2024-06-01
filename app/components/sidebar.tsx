@@ -21,7 +21,7 @@ export const SideBar = () => {
       )}
       aria-label="Sidebar"
     >
-      <div className="flex flex-col h-full px-3 py-4 overflow-y-auto bg-white border-r border-slate-200 dark:border-zinc-700 dark:bg-zinc-900">
+      <div className="flex flex-col h-full px-3 py-4 overflow-y-auto bg-white border-r border-slate-200 dark:border-zinc-600 dark:bg-zinc-900">
         <a
           href="#"
           className="flex items-center px-3 py-2 mb-10 rounded-lg text-slate-900 dark:text-white"

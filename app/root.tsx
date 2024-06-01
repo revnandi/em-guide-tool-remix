@@ -6,6 +6,7 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
+import "@fontsource-variable/inter/wght.css";
 import stylesheet from "~/tailwind.css?url";
 import { SideBar } from "./components/sidebar";
 import { SideBarLayout } from "./components/sidebar-layout";
