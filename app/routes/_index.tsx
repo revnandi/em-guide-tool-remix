@@ -1,6 +1,7 @@
 import type { MetaFunction } from "@remix-run/node";
 import { SideBarLayout } from "~/components/sidebar-layout";
 import { SideBar } from "~/components/sidebar";
+import { Outlet } from "@remix-run/react";
 
 export const meta: MetaFunction = () => {
   return [
@@ -8,11 +9,12 @@ export const meta: MetaFunction = () => {
     { name: "description", content: "Welcome to Remix!" },
   ];
 };
-
 export default function Index() {
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
-      <SideBarLayout sidebar={ <SideBar/> } content={ <h1>fdgadg</h1>} />
+          <div>
+      <h1>Articles List</h1>
+    </div>
     </div>
   );
 }
