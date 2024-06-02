@@ -43,12 +43,15 @@ export function Field({
   const errorId = errors?.length ? `${id}-error` : undefined;
   return (
     <div className={className}>
-      <Label htmlFor={id} {...labelProps} className="mb-2 inline-block" />
+      <Label htmlFor={id} {...labelProps} className="inline-block mb-2" />
       <Input
         id={id}
         aria-invalid={errorId ? true : undefined}
         aria-describedby={errorId}
         {...inputProps}
+        className={
+          errors && errors?.length > 0 ? "dark:border-red-500" : ""
+        }
       />
       <div
         className={cn(
@@ -115,10 +118,10 @@ export function CheckboxField({
         <label
           htmlFor={id}
           {...labelProps}
-          className="text-body-xs text-muted-foreground self-center"
+          className="self-center text-body-xs text-muted-foreground"
         />
       </div>
-      <div className="px-4 pb-3 pt-1">
+      <div className="px-4 pt-1 pb-3">
         {errorId ? <ErrorList id={errorId} errors={errors} /> : null}
       </div>
     </div>

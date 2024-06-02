@@ -6,7 +6,7 @@ import {
   type LoaderFunctionArgs,
   type MetaFunction,
 } from "@remix-run/node";
-import { Form, Link, useActionData, useSearchParams } from "@remix-run/react";
+import { Form, useActionData, useSearchParams } from "@remix-run/react";
 import { z } from "zod";
 // import { GeneralErrorBoundary } from "~components/error-boundary.tsx";
 import { CheckboxField, ErrorList, Field } from "~/components/form";
@@ -49,7 +49,7 @@ export default function LoginPage() {
   return (
     <main className="">
       <div className="container mx-auto">
-        <Card className="mx-auto max-w-sm">
+        <Card className="max-w-sm mx-auto">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl font-bold">Login</CardTitle>
             <CardDescription>

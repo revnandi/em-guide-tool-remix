@@ -58,8 +58,8 @@ export const notificationsRelations = relations(notifications, ({ one }) => ({
 
 export const articles = mysqlTable("articles", {
   id: int("id").primaryKey().autoincrement(),
-  title: text("title"),
-  slug: varchar('slug', { length: 256 }).unique(),
+  title: text("title").notNull(),
+  slug: varchar('slug', { length: 256 }).unique().notNull(),
   except: text("except"),
   originalUrl: text("original_url"),
   magazineId: int("magazine_id"),
@@ -84,8 +84,8 @@ export const articlesRelations = relations(articles, ({ one }) => ({
 
 export const magazines = mysqlTable("magazines", {
   id: int("id").primaryKey().autoincrement(),
-  name: text("name"),
-  slug: varchar('slug', { length: 256 }).unique(),
+  name: text("name").notNull(),
+  slug: varchar('slug', { length: 256 }).unique().notNull(),
   logoId: int("logo_id"),
   createdBy: int("user_id"),
   createdAt: datetime("created_at"),
