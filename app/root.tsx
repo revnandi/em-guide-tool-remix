@@ -10,6 +10,7 @@ import "@fontsource-variable/inter/wght.css";
 import stylesheet from "~/tailwind.css?url";
 import { SideBar } from "./components/sidebar";
 import { SideBarLayout } from "./components/sidebar-layout";
+import { Toaster } from "~/components/toaster";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -28,6 +29,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <SideBarLayout sidebar={<SideBar />} content={children} />
         <ScrollRestoration />
         <Scripts />
+        <Toaster />
       </body>
     </html>
   );
