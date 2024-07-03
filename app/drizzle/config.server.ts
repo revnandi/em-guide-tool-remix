@@ -1,5 +1,6 @@
 import { drizzle } from "drizzle-orm/mysql2";
 import mysql from "mysql2/promise";
+import * as schema from './schema.server';
 
 if (!process.env.DATABASE_HOST || !process.env.DATABASE_USER || !process.env.DATABASE_NAME) {
   throw new Error(
@@ -14,4 +15,4 @@ const connection = await mysql.createConnection({
   database: process.env.DATABASE_NAME
 });
 
-export const db = drizzle(connection);
+export const db = drizzle(connection, {schema, mode: "default"});
