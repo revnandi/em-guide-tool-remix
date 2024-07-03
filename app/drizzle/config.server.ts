@@ -16,3 +16,6 @@ const connection = await mysql.createConnection({
 });
 
 export const db = drizzle(connection, {schema, mode: "default"});
+
+export type Magazine = typeof schema.magazines;
+export type NewMAgazine = typeof schema.magazines.$inferInsert;

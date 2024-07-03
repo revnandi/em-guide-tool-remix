@@ -1,4 +1,5 @@
 import { db } from "~/drizzle/config.server";
+import { type Magazine } from "~/drizzle/config.server";
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import {
   ColumnDef,
@@ -14,6 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/table";
+import type { Row } from "@tanstack/react-table";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,14 +27,14 @@ import {
 import { Button } from "~/components/button";
 import { Icon } from "~/components/icon";
 import { NavLink, json, useLoaderData, useNavigate } from "@remix-run/react";
-import { format } from '~/utils/date';
+import { format } from "~/utils/date";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export const columns = [
+export const columns: ColumnDef<Magazine>[] = [
   {
     accessorKey: "id",
     header: "ID",
@@ -50,7 +52,9 @@ export const columns = [
   {
     accessorKey: "createdAt",
     header: "Created at",
-    cell: ({ row }) => format(new Date(row.original.createdAt), "yyyy-MM-dd HH:mm:ss"),
+    cell: ({ row }) =>
+      // @ts-ignore
+      format(new Date(row.original.createdAt), "yyyy-MM-dd HH:mm:ss"),
   },
   {
     id: "actions",
@@ -133,6 +137,7 @@ export function DataTable<TData, TValue>({
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
                 onClick={() => {
+                  // @ts-ignore
                   navigate(`/magazines/${row.original.id}`);
                 }}
               >
@@ -178,6 +183,7 @@ export default function Magazines() {
           <span>Add new magazine</span>
         </NavLink>
       </div>
+      {/* @ts-ignore */}
       <DataTable columns={columns} data={magazines} />
     </div>
   );
