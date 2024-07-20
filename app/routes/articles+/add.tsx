@@ -23,6 +23,7 @@ import { db } from "~/drizzle/config.server";
 import slugify from "slugify";
 import { useState } from "react";
 import { DrizzleError } from "types/drizzle-error";
+import { create } from "domain";
 
 export const meta: MetaFunction = () => {
   return [
@@ -36,6 +37,8 @@ const AddArticleFormSchema = z.object({
   slug: z.string(),
   originalUrl: z.string().url().optional(),
   excerpt: z.string().optional(),
+  createdAt: z.string().optional(),
+  updatedAt: z.string().optional(),
   redirectTo: z.string().optional(),
 });
 
@@ -45,11 +48,14 @@ export async function action({ request }: ActionFunctionArgs) {
   const title = formData.get("title");
   const slug = formData.get("slug");
   const originalUrl = formData.get("originalUrl");
+  // const createdAt = formData.get("createdAt");
+  // const updatedAt = formData.get("updatedAt");
+  // const createdAt = day
 
   try {
-    await db.insert(articles).values({ title, slug, originalUrl }).execute();
+    await db.insert(articles).values({ title, slug, originalUrl, createdAt: new Date(), updatedAt: new Date() }).execute();
   } catch (error: unknown) {
-    const err = error as DrizzleError
+    const err = error as DrizzleError;
     return json(err.message, { status: 500 });
   }
 
@@ -77,7 +83,7 @@ export default function AddArticles() {
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newTitle = e.target.value;
     setTitle(newTitle);
-    setSlug(slugify(newTitle));
+    setSlug(slugify(newTitle, { lower: true, strict: true }));
   };
 
   // ! Fix slugify when directly editing slug
@@ -93,7 +99,7 @@ export default function AddArticles() {
         <span className="text-indigo-600">Back</span>
       </NavLink>
       <div className="flex justify-between mt-4 mb-4">
-        <div className="text-3xl font-medium text-white">
+        <div className="text-3xl font-medium text-white lg:text-4xl">
           <h1>Add Article</h1>
         </div>
         <NavLink
@@ -142,6 +148,32 @@ export default function AddArticles() {
                 }}
                 errors={fields.originalUrl.errors}
               />
+              {/* <Field
+                className="hidden col-span-6"
+                labelProps={{
+                  children: "Created at",
+                }}
+                inputProps={{
+                  ...getInputProps(fields.createdAt, {
+                    type: "text",
+                  }),
+                  value: new Date().toISOString(),
+                }}
+                errors={fields.originalUrl.errors}
+              />
+              <Field
+                className="hidden col-span-6"
+                labelProps={{
+                  children: "Created at",
+                }}
+                inputProps={{
+                  ...getInputProps(fields.updatedAt, {
+                    type: "text",
+                  }),
+                  value: new Date().toISOString(),
+                }}
+                errors={fields.originalUrl.errors}
+              /> */}
               {/* <CheckboxField
                 labelProps={{ children: "Remember me" }}
                 buttonProps={{

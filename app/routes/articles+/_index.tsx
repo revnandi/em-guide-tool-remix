@@ -1,4 +1,4 @@
-import type { MetaFunction } from "@remix-run/node";
+import { type MetaFunction, json } from "@remix-run/node";
 import {
   ColumnDef,
   flexRender,
@@ -23,8 +23,16 @@ import {
 } from "~/components/dropdown";
 import { Button } from "~/components/button";
 import { Icon } from "~/components/icon";
-import { NavLink, useNavigate } from "@remix-run/react";
+import { NavLink, useLoaderData, useNavigate } from "@remix-run/react";
+import { db } from "~/drizzle/config.server";
+// import { articles } from "~/drizzle/schema.server";
+import { getCurrentFormattedDateTime, toZonedTime } from "~/utils/date";
 
+export const loader = async () => {
+  const articles = await db.query.articles.findMany();
+
+  return json({ articles });
+};
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -53,8 +61,8 @@ export const columns = [
     // cell: ({ row }) => <div className="truncate">{row.original.title}</div>
   },
   {
-    accessorKey: "magazine",
-    header: "Magazine",
+    accessorKey: "slug",
+    header: "Slug",
   },
   {
     accessorKey: "language",
@@ -69,6 +77,38 @@ export const columns = [
     header: "Translation Requests",
   },
   {
+    accessorKey: "createdAt",
+    header: "Created at",
+    cell: ({ row }) => {
+      return (
+        <div>
+          {getCurrentFormattedDateTime(
+            toZonedTime(
+              new Date(row.original.createdAt),
+              Intl.DateTimeFormat().resolvedOptions().timeZone
+            ).toString()
+          )}
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "updatedAt",
+    header: "Updated at",
+    cell: ({ row }) => {
+      return (
+        <div>
+          {getCurrentFormattedDateTime(
+            toZonedTime(
+              new Date(row.original.createdAt),
+              Intl.DateTimeFormat().resolvedOptions().timeZone
+            ).toString()
+          )}
+        </div>
+      );
+    },
+  },
+  {
     accessorKey: "publishedAt",
     header: "Published at",
   },
@@ -80,6 +120,8 @@ export const columns = [
     id: "actions",
     cell: ({ row }) => {
       const payment = row.original;
+
+      console.log(row);
 
       return (
         <DropdownMenu>
@@ -178,6 +220,7 @@ export function DataTable<TData, TValue>({
 
 function getData() {
   // Fetch data from your API here.
+
   return [
     {
       id: "728ed52f",
@@ -227,7 +270,7 @@ function getData() {
   ];
 }
 export default function Articles() {
-  const data = getData();
+  const { articles } = useLoaderData<typeof loader>();
 
   return (
     <div className="w-full px-12 py-16">
@@ -236,18 +279,18 @@ export default function Articles() {
         <span className="text-indigo-600">Back</span>
       </NavLink>
       <div className="flex justify-between mt-4 mb-4">
-        <div className="text-3xl font-medium text-white">
-          <h1>Articles List</h1>
+        <div className="text-3xl font-medium text-white lg:text-4xl">
+          <h1>Articles</h1>
         </div>
         <NavLink
           to="/articles/add"
           className="flex items-center justify-center gap-1 px-4 py-2 text-sm font-medium text-white transition-colors ease-in-out bg-indigo-600 rounded-md whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-indigo-500 h-9"
         >
           <Icon name="plus" size="sm" className="text-white" />
-          <span>Add new article</span>
+          <span>Create new</span>
         </NavLink>
       </div>
-      <DataTable columns={columns} data={data} />
+      <DataTable columns={columns} data={articles} />
     </div>
   );
 }

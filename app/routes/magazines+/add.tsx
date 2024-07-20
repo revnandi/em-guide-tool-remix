@@ -46,9 +46,14 @@ export async function action({ request }: ActionFunctionArgs) {
     return json({ message: "Magazine created" }, { status: 201 });
   } catch (error: unknown) {
     const err = error as DrizzleError;
-    return json(err.message, { status: 500 });
-  }
+    if ((err.code = "ER_DUP_ENTRY"))
+      return json(
+        { error: "Magazine with that slug already exists." },
+        { status: 400 }
+      );
 
+    return json(err, { status: 500 });
+  }
 }
 export default function AddMagazine() {
   const actionData = useActionData<typeof action>();
@@ -58,23 +63,23 @@ export default function AddMagazine() {
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");
 
-  console.log(actionData);
-
   useEffect(() => {
     if (actionData?.message) {
       toast.success(actionData?.message);
+    } else if (actionData?.error) {
+      toast.error(actionData?.error);
     }
-  }),
-    [actionData];
+  }, [actionData]);
 
   const [form, fields] = useForm({
     id: "add-magazine-form",
     constraint: getZodConstraint(AddMagazineFormSchema),
     defaultValue: { redirectTo },
-    lastResult: actionData?.message,
+    lastResult: actionData,
     onValidate({ formData }) {
       return parseWithZod(formData, { schema: AddMagazineFormSchema });
     },
+
     shouldRevalidate: "onBlur",
   });
 

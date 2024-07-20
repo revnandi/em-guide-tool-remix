@@ -13,7 +13,7 @@ export default function Index() {
   return (
     <div>
       <div>
-        <h1>Articles List</h1>
+        <h1>Articles</h1>
       </div>
     </div>
   );

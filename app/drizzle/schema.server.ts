@@ -118,9 +118,9 @@ export const mediaRelations = relations(media, ({ many }) => ({
   magazines: many(magazines),
 }));  
 
-// export const articleShares = mysqlTable("article_shares", {
-//   id: int("id").primaryKey().autoincrement(),
-//   articleId: int("article_id"),
-//   userId: int("user_id"),
-//   sharedAt: datetime("shared_at"),
-// });
+export const articleShares = mysqlTable("article_shares", {
+  id: int("id").primaryKey().autoincrement(),
+  articleId: int("article_id"),
+  userId: int("user_id"),
+  sharedAt: datetime("shared_at"),
+});

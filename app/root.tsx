@@ -29,7 +29,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <SideBarLayout sidebar={<SideBar />} content={children} />
         <ScrollRestoration />
         <Scripts />
-        <Toaster />
+        <Toaster richColors/>
       </body>
     </html>
   );
