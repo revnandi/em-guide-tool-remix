@@ -60,7 +60,7 @@ export const articles = mysqlTable("articles", {
   id: int("id").primaryKey().autoincrement(),
   title: text("title").notNull(),
   slug: varchar('slug', { length: 256 }).unique().notNull(),
-  except: text("except"),
+  excerpt: text("excerpt"),
   originalUrl: text("original_url"),
   magazineId: int("magazine_id"),
   createdBy: int("user_id"),

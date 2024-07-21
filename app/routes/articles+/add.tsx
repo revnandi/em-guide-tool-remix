@@ -4,7 +4,6 @@ import { SideBar } from "~/components/sidebar";
 import {
   Form,
   NavLink,
-  Outlet,
   json,
   redirect,
   useActionData,
@@ -15,15 +14,14 @@ import { z } from "zod";
 import { useIsPending } from "~/utils/misc";
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { getZodConstraint, parseWithZod } from "@conform-to/zod";
-import { Field, CheckboxField } from "~/components/form";
+import { Field, CheckboxField, WysiwygField } from "~/components/form";
 import { StatusButton } from "~/components/status-button";
-import { drizzle } from "drizzle-orm/mysql2";
+import { WysiwygEditor } from "~/components/form/wysiwyg";
 import { articles, articlesRelations } from "~/drizzle/schema.server";
 import { db } from "~/drizzle/config.server";
 import slugify from "slugify";
 import { useState } from "react";
 import { DrizzleError } from "types/drizzle-error";
-import { create } from "domain";
 
 export const meta: MetaFunction = () => {
   return [
@@ -48,12 +46,21 @@ export async function action({ request }: ActionFunctionArgs) {
   const title = formData.get("title");
   const slug = formData.get("slug");
   const originalUrl = formData.get("originalUrl");
-  // const createdAt = formData.get("createdAt");
-  // const updatedAt = formData.get("updatedAt");
-  // const createdAt = day
+  const excerpt = formData.get("excerpt");
 
   try {
-    await db.insert(articles).values({ title, slug, originalUrl, createdAt: new Date(), updatedAt: new Date() }).execute();
+    await db
+      .insert(articles)
+      .values({
+        title,
+        slug,
+        excerpt,
+        originalUrl,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        isPublished: false,
+      })
+      .execute();
   } catch (error: unknown) {
     const err = error as DrizzleError;
     return json(err.message, { status: 500 });
@@ -88,7 +95,7 @@ export default function AddArticles() {
 
   // ! Fix slugify when directly editing slug
   const handleSlugChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newSlug = e.target.value;
+    const newSlug = slugify(e.target.value, { lower: true, strict: true });
     setSlug(newSlug);
   };
 
@@ -147,6 +154,15 @@ export default function AddArticles() {
                   ...getInputProps(fields.originalUrl, { type: "text" }),
                 }}
                 errors={fields.originalUrl.errors}
+              />
+              <WysiwygField
+                labelProps={{
+                  children: "Excerpt",
+                }}
+                inputProps={{
+                  ...getInputProps(fields.excerpt, { type: "hidden" }),
+                }}
+                className="col-span-6"
               />
               {/* <Field
                 className="hidden col-span-6"

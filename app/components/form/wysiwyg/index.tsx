@@ -9,6 +9,12 @@ import { Icon } from "~/components/icon";
 import { cn } from "~/utils/misc";
 
 import suggestion from "./suggestion";
+import React from "react";
+
+interface WysiwygEditorProps
+  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  className?: string;
+}
 
 const MenuBar = ({ editor }: { editor: Editor }) => {
   if (!editor) {
@@ -92,53 +98,65 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
   );
 };
 
-export default () => {
-  const editor = useEditor({
-    extensions: [
-      Mention.configure({
-        HTMLAttributes: {
+const WysiwygEditor = React.forwardRef<HTMLTextAreaElement, WysiwygEditorProps>(
+  ({ className, ...props }, ref) => {
+    const editor = useEditor({
+      immediatelyRender: false,
+      extensions: [
+        Mention.configure({
+          HTMLAttributes: {
+            class:
+              "mention font-bold text-indigo-600 cursor-pointer bg-violet-100 rounded-md p-0.5",
+          },
+          suggestion,
+        }),
+        Color.configure({ types: [TextStyle.name, ListItem.name] }),
+        TextStyle.configure({ types: [ListItem.name] }),
+        Underline,
+        StarterKit.configure({
+          bulletList: {
+            keepMarks: true,
+            keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
+          },
+          orderedList: {
+            keepMarks: true,
+            keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
+          },
+        }),
+      ],
+      content: ``,
+      editorProps: {
+        attributes: {
           class:
-            "mention font-bold text-indigo-600 cursor-pointer bg-violet-100 rounded-md p-0.5",
+            "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl dark:text-white mx-auto focus:outline-none min-h-32 px-2 py-2",
         },
-        suggestion,
-      }),
-      Color.configure({ types: [TextStyle.name, ListItem.name] }),
-      TextStyle.configure({ types: [ListItem.name] }),
-      Underline,
-      StarterKit.configure({
-        bulletList: {
-          keepMarks: true,
-          keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
-        },
-        orderedList: {
-          keepMarks: true,
-          keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
-        },
-      }),
-    ],
-    content: ``,
-    editorProps: {
-      attributes: {
-        class:
-          "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl mx-auto focus:outline-none min-h-32 px-2 py-2",
       },
-    },
-  });
+    });
 
-  if (!editor) {
-    return null;
-  }
+    if (!editor) {
+      return null;
+    }
 
-  return (
-    <div className="rounded-md border px-2 pb-2">
-      <EditorContent editor={editor} />
-      <div className="flex justify-between gap-x-1">
-        <MenuBar editor={editor} />
-        <button className="flex min-w-12 items-center justify-center gap-x-2 rounded-md bg-violet-100 px-4 py-1 transition-colors ease-in-out hover:bg-violet-50">
-          <span className="text-sm font-medium text-indigo-600">Comment</span>
-          {/* <Icon name="paper-plane" size="sm" className="text-indigo-600" /> */}
-        </button>
+    return (
+      <div className={cn("rounded-md border dark:border-zinc-700 px-2 pb-2", className)}>
+        <EditorContent editor={editor} />
+        <div className="flex justify-between gap-x-1">
+          <MenuBar editor={editor} />
+          <button className="flex items-center justify-center px-4 py-1 transition-colors ease-in-out rounded-md min-w-12 gap-x-2 bg-violet-100 hover:bg-violet-50">
+            <span className="text-sm font-medium text-indigo-600">Comment</span>
+            {/* <Icon name="paper-plane" size="sm" className="text-indigo-600" /> */}
+          </button>
+        </div>
+        <textarea
+          id={props.id}
+          name={props.name}
+          value={editor.getHTML()}
+          className="hidden"
+        />
       </div>
-    </div>
-  );
-};
+    );
+  }
+);
+WysiwygEditor.displayName = "WysiwygEditor";
+
+export { WysiwygEditor };

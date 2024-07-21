@@ -1,10 +1,24 @@
 import { drizzle } from "drizzle-orm/mysql2";
 import mysql from "mysql2/promise";
 import * as schema from './schema.server';
+import * as dotenv from "dotenv";
+dotenv.config();
 
-if (!process.env.DATABASE_HOST || !process.env.DATABASE_USER || !process.env.DATABASE_NAME) {
+if (!process.env.DATABASE_HOST) {
   throw new Error(
-    "Missing environment variable: DATABASE_PATH",
+    "Missing environment variable: DATABASE_HOST",
+  )
+}
+
+if (!process.env.DATABASE_USER) {
+  throw new Error(
+    "Missing environment variable: DATABASE_USER",
+  )
+}
+
+if (!process.env.DATABASE_NAME) {
+  throw new Error(
+    "Missing environment variable: DATABASE_NAME",
   )
 }
 
@@ -18,4 +32,4 @@ const connection = await mysql.createConnection({
 export const db = drizzle(connection, {schema, mode: "default"});
 
 export type Magazine = typeof schema.magazines;
-export type NewMAgazine = typeof schema.magazines.$inferInsert;
+export type NewMagazine = typeof schema.magazines.$inferInsert;

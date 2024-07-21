@@ -15,6 +15,13 @@
       "when": 1717361636045,
       "tag": "0001_stale_scarlet_witch",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1721588677248,
+      "tag": "0002_acoustic_human_cannonball",
+      "breakpoints": true
     }
   ]
 }
