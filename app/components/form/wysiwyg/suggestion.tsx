@@ -61,7 +61,6 @@ export default {
       },
 
       onKeyDown(props: SuggestionKeyDownProps) {
-        console.log(props);
         if (props.event.key === "Escape") {
           return true;
         }

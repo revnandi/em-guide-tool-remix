@@ -121,8 +121,6 @@ export const columns = [
     cell: ({ row }) => {
       const payment = row.original;
 
-      console.log(row);
-
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

@@ -3,6 +3,15 @@ import React, { useId } from "react";
 import { Checkbox, type CheckboxProps } from "~/components/form/checkbox";
 import { Input } from "~/components/form/input";
 import { Label } from "~/components/form/label";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/select";
 import { WysiwygEditor } from "./wysiwyg";
 import { cn } from "~/utils/misc";
 
@@ -157,6 +166,65 @@ export function CheckboxField({
         />
       </div>
       <div className="px-4 pt-1 pb-3">
+        {errorId ? <ErrorList id={errorId} errors={errors} /> : null}
+      </div>
+    </div>
+  );
+}
+
+export function SelectField({
+  labelProps,
+  selectProps,
+  options,
+  errors,
+  className,
+}: {
+  labelProps: React.LabelHTMLAttributes<HTMLLabelElement>;
+  selectProps: React.SelectHTMLAttributes<HTMLSelectElement> & {
+    placeholder?: string;
+  };
+  options?: {
+    label: string;
+    value: string;
+  }[];
+  errors?: ListOfErrors;
+  className?: string;
+}) {
+  const fallbackId = useId();
+  const id = selectProps.id ?? fallbackId;
+  const errorId = errors?.length ? `${id}-error` : undefined;
+
+  console.warn(selectProps.defaultValue);
+
+  return (
+    <div className={className}>
+      <Label htmlFor={id} {...labelProps} className="inline-block mb-2" />
+      <Select
+        id={id}
+        {...selectProps}
+        aria-invalid={errorId ? true : undefined}
+        aria-describedby={errorId}
+        defaultValue={selectProps.defaultValue?.toString()}
+      >
+        <SelectTrigger
+          className={errors && errors?.length > 0 ? "dark:border-red-500" : ""}
+        >
+          <SelectValue placeholder={selectProps.placeholder ?? "Select"} />
+        </SelectTrigger>
+        <SelectContent>
+          {options?.map((option: { label: string; value: string }) => (
+            <SelectItem key={option.value} value={option.value}>
+              {option.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+      <div
+        className={cn(
+          "min-h-[32px] px-4 pb-3 pt-1",
+          errors && errors?.length > 0 ? "" : "hidden"
+        )}
+      >
         {errorId ? <ErrorList id={errorId} errors={errors} /> : null}
       </div>
     </div>

@@ -25,18 +25,18 @@ export const StatusButton = React.forwardRef<
 	})
 	const companion = {
 		pending: delayedPending ? (
-			<div className="inline-flex h-6 w-6 items-center justify-center">
+			<div className="inline-flex items-center justify-center w-6 h-6">
 				<Icon name="update" className="animate-spin" />
 			</div>
 		) : null,
 		success: (
-			<div className="inline-flex h-6 w-6 items-center justify-center">
+			<div className="inline-flex items-center justify-center w-6 h-6">
 				<Icon name="check" />
 			</div>
 		),
 		error: (
-			<div className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-destructive">
-				<Icon name="cross-1" className="text-destructive-foreground" />
+			<div className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-destructive">
+				<Icon name="cross-2" className="dark:text-indigo-600" />
 			</div>
 		),
 		idle: null,

@@ -63,9 +63,10 @@ export const articles = mysqlTable("articles", {
   excerpt: text("excerpt"),
   originalUrl: text("original_url"),
   magazineId: int("magazine_id"),
+  languageId: int("language_id"),
   createdBy: int("user_id"),
   createdAt: datetime("created_at"),
-  updatedAt: datetime("updated_at"),
+  updatedAt: datetime("updated_at").$onUpdate(() => new Date()),
   isPublished: boolean("is_published"),
   publishedAt: datetime("published_at"),
 });
@@ -79,6 +80,10 @@ export const articlesRelations = relations(articles, ({ one }) => ({
     fields: [articles.magazineId],
     references: [magazines.id],
   }),
+  language: one(languages, {
+    fields: [articles.languageId],
+    references: [languages.id],
+  }),
   // shares: many(articleShares),
 }));
 
@@ -89,7 +94,7 @@ export const magazines = mysqlTable("magazines", {
   logoId: int("logo_id"),
   createdBy: int("user_id"),
   createdAt: datetime("created_at"),
-  updatedAt: datetime("updated_at"),
+  updatedAt: datetime("updated_at").$onUpdate(() => new Date()),
 });
 
 export const magazinesRelations = relations(magazines, ({ one, many }) => ({
@@ -111,16 +116,26 @@ export const media = mysqlTable("media", {
   size: int("size"),
   description: text("description"),
   createdAt: datetime("created_at"),
-  updatedAt: datetime("updated_at"),
+  updatedAt: datetime("updated_at").$onUpdate(() => new Date()),
 });
 
 export const mediaRelations = relations(media, ({ many }) => ({
   magazines: many(magazines),
-}));  
+}));
 
 export const articleShares = mysqlTable("article_shares", {
   id: int("id").primaryKey().autoincrement(),
   articleId: int("article_id"),
   userId: int("user_id"),
   sharedAt: datetime("shared_at"),
+});
+
+export const languages = mysqlTable("languages", {
+  id: int("id").primaryKey().autoincrement(),
+  name: text("name").notNull(),
+  slug: varchar('slug', { length: 256 }).unique().notNull(),
+  code: text("code").notNull(),
+  createdBy: int("user_id"),
+  createdAt: datetime("created_at"),
+  updatedAt: datetime("updated_at").$onUpdate(() => new Date()),
 });

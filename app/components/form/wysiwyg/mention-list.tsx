@@ -18,7 +18,6 @@ import {
 import { Popover, PopoverAnchor, PopoverContent } from "~/components/popover";
 
 export default forwardRef((props: SuggestionProps, ref) => {
-  console.log(props);
   let mentionRef: React.RefObject<Element> = useRef(props.decorationNode);
 
   const [selectedIndex, setSelectedIndex] = useState(0);

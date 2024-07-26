@@ -22,6 +22,20 @@
       "when": 1721588677248,
       "tag": "0002_acoustic_human_cannonball",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1721942328404,
+      "tag": "0003_bumpy_vanisher",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1721987753953,
+      "tag": "0004_military_blonde_phantom",
+      "breakpoints": true
     }
   ]
 }

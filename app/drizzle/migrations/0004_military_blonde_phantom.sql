@@ -1,0 +1,1 @@
+ALTER TABLE `languages` ADD `code` text NOT NULL;

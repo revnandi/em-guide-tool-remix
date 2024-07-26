@@ -1,6 +1,4 @@
 import type { ActionFunctionArgs, MetaFunction } from "@remix-run/node";
-import { SideBarLayout } from "~/components/sidebar-layout";
-import { SideBar } from "~/components/sidebar";
 import {
   Form,
   NavLink,
@@ -14,10 +12,9 @@ import { z } from "zod";
 import { useIsPending } from "~/utils/misc";
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { getZodConstraint, parseWithZod } from "@conform-to/zod";
-import { Field, CheckboxField, WysiwygField } from "~/components/form";
+import { Field, WysiwygField } from "~/components/form";
 import { StatusButton } from "~/components/status-button";
-import { WysiwygEditor } from "~/components/form/wysiwyg";
-import { articles, articlesRelations } from "~/drizzle/schema.server";
+import { articles } from "~/drizzle/schema.server";
 import { db } from "~/drizzle/config.server";
 import slugify from "slugify";
 import { useState } from "react";
